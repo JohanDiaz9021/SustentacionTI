@@ -1,0 +1,4 @@
+Una empresa requiere un software capaz de procesar las descripciones proporcionadas por los usuarios después de un accidente.
+El objetivo es extraer información específica, como el nombre, la fecha del accidente, la dirección del suceso,
+el número telefónico, la identificación y el correo electrónico, para luego organizar estos datos en una lista.
+Esta medida facilitará el proceso de verificación de la información de contacto asociada a cada incidente.
