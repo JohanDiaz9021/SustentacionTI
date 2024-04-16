@@ -2,6 +2,7 @@ import tkinter as tk
 import os
 import sys
 from tkinter import filedialog
+from fpdf import FPDF
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
@@ -35,13 +36,23 @@ class GUI:
     def load_pdf(self):
         file_path = filedialog.askopenfilename(filetypes=[("PDF files", "*.pdf")])
         if file_path:
-            with open(file_path, 'r') as file:
+            with open(file_path, 'r', encoding='utf-8') as file:
                 text = file.read()
             self.text_box.delete('1.0', tk.END)
             self.text_box.insert(tk.END, text)
 
     def save_pdf(self):
-        pass
+        text = self.text_box.get("1.0", tk.END)
+        result = self.controller.validate_input(text)
+        result_pdf = FPDF()
+        result_pdf.add_page()
+        result_pdf.set_font("Arial", size = 12)
+        result_pdf.cell(200, 10, txt = result, ln = True)
+
+        file_path = filedialog.asksaveasfilename(defaultextension=".pdf", filetypes=[("PDF files", "*.pdf")])
+        if file_path:
+            result_pdf.output(file_path)
+
 
 def main():
     win = tk.Tk()

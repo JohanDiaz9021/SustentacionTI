@@ -1,5 +1,8 @@
 import unittest
-from pyformlang.finite_automaton import DeterministicFiniteAutomaton
+import os
+import sys
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from RegularExpressionsModule.AutomataModule import create_nombre_dfa, create_telefono_dfa, create_identificacion_dfa
 
 class automata_test(unittest.TestCase):
     def test_create_nombre_dfa(self):
@@ -44,3 +47,6 @@ def test_create_identificacion_dfa(self):
         self.assertIn(("q4", str(i), "q5"), identificacion_dfa.transitions)
         self.assertIn(("q5", str(i), "q6"), identificacion_dfa.transitions)
         self.assertIn(("q6", str(i), "q7"), identificacion_dfa.transitions)
+
+if __name__ == '__main__':
+    unittest.main()
