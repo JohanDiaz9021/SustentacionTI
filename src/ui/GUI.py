@@ -1,65 +1,61 @@
 import tkinter as tk
-import os
-import sys
 from tkinter import filedialog
-from fpdf import FPDF
-
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-
-from RegularExpressionsModule.Controller import Controller
-
+from PyPDF2 import PdfReader, PdfWriter
 
 
 class GUI:
-    # inicializando ventana
-    def __init__ (self, window):
-        #set window and controller
+    def __init__(self, window):
         self.window = window
-        self.controller = Controller()
-        #set window parts
-        self.window.title("Recolector de información segurAutos")
-        self.window.geometry("1000x800")
-        
-        self.title_label = tk.Label(self.window, text="Recolector de información segurAutos", font=("Arial", 20))
+        self.window.title("Visualizador y Guardado de PDF")
+        self.window.geometry("800x600")
+
+        self.title_label = tk.Label(self.window, text="Visualizador y Guardado de PDF", font=("Arial", 20))
         self.title_label.pack(pady=20)
-        
+
         self.text_box = tk.Text(self.window, height=20, width=80)
         self.text_box.pack(pady=20)
 
         self.load_button = tk.Button(self.window, text="Cargar PDF", command=self.load_pdf)
         self.load_button.pack(side=tk.LEFT, padx=20)
 
-        self.save_button = tk.Button(self.window, text="Descargar PDF", command=self.save_pdf)
+        self.save_button = tk.Button(self.window, text="Guardar como PDF", command=self.save_pdf)
         self.save_button.pack(side=tk.RIGHT, padx=20)
-
 
     def load_pdf(self):
         file_path = filedialog.askopenfilename(filetypes=[("PDF files", "*.pdf")])
         if file_path:
-            with open(file_path, 'r', encoding='iso-8859-1') as file:
-                text = file.read()
-            self.text_box.delete('1.0', tk.END)
-            self.text_box.insert(tk.END, text)
+            try:
+                pdf_text = ""
+                with open(file_path, "rb") as pdf_file:
+                    pdf_reader = PdfReader(pdf_file)
+                    for page in pdf_reader.pages:
+                        pdf_text += page.extract_text()
+                self.text_box.delete("1.0", tk.END)
+                self.text_box.insert(tk.END, pdf_text)
+            except Exception as e:
+                self.text_box.delete("1.0", tk.END)
+                self.text_box.insert(tk.END, f"Error al cargar el PDF: {e}")
 
     def save_pdf(self):
-        text = self.text_box.get("1.0", tk.END)
-        result = self.controller.validate_input(text)
-        result_pdf = FPDF()
-        result_pdf.add_page()
-        result_pdf.set_font("Arial", size = 12)
-        result_pdf.multi_cell(200, 10, txt=result, align="L")
-
+        text_to_save = self.text_box.get("1.0", tk.END)
         file_path = filedialog.asksaveasfilename(defaultextension=".pdf", filetypes=[("PDF files", "*.pdf")])
         if file_path:
-            result_pdf.output(file_path)
-
-    
+            try:
+                pdf_writer = PdfWriter()
+                pdf_writer.add_blank_page()
+                pdf_writer.add_page(PdfReader(file_path).pages[0])
+                with open(file_path, "wb") as pdf_output_file:
+                    pdf_writer.write(pdf_output_file)
+            except Exception as e:
+                self.text_box.delete("1.0", tk.END)
+                self.text_box.insert(tk.END, f"Error al guardar como PDF: {e}")
 
 
 def main():
     win = tk.Tk()
     ui = GUI(win)
     win.mainloop()
-    
+
+
 if __name__ == "__main__":
     main()
