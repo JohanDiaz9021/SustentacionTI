@@ -21,21 +21,6 @@ def create_nombre_dfa():
     nombre_dfa.add_transition("q1", "b", "q1")
     return nombre_dfa
 
-def create_fecha_nfa():
-    fecha_regex_str = "(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/[0-9]{4}"
-    fecha_regex = Regex(fecha_regex_str)
-    fecha_nfa = fecha_regex.to_epsilon_nfa().minimize()
-    return fecha_nfa
-
-def create_direccion_dfa():
-    direccion_dfa = DeterministicFiniteAutomaton()
-    direccion_dfa.add_start_state("q0")
-    direccion_dfa.add_final_state("q1")
-    direccion_dfa.add_transition("q0", " ", "q1")
-    direccion_dfa.add_transition("q1", " ", "q1")
-    direccion_dfa.add_transition("q1", "123", "q1")  
-    return direccion_dfa
-
 def create_telefono_dfa():
     telefono_dfa = DeterministicFiniteAutomaton()
     telefono_dfa.add_start_state("q0")
@@ -52,15 +37,6 @@ def create_telefono_dfa():
     telefono_dfa.add_transition("q8", "-", "q9")
     return telefono_dfa
 
-def create_email_dfa():
-    email_dfa = DeterministicFiniteAutomaton()
-    email_dfa.add_start_state("q0")
-    email_dfa.add_final_state("q4")
-    email_dfa.add_transition("q0", "@", "q1")
-    email_dfa.add_transition("q1", ".", "q2")
-    email_dfa.add_transition("q2", "com", "q3")
-    email_dfa.add_transition("q3", "", "q4")
-    return email_dfa
 
 def create_identificacion_dfa():
     identificacion_dfa = DeterministicFiniteAutomaton()
