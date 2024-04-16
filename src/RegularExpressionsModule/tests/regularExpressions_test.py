@@ -1,7 +1,7 @@
 import unittest
 import re
 
-class TestRegex(unittest.TestCase):
+class regularExpressions_test(unittest.TestCase):
     def test_name_regex(self):
         name_regex = r'[A-Za-z]+\s[A-Za-z]+'
         self.assertTrue(re.match(name_regex, "John Doe"))
