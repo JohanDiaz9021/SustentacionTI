@@ -4,10 +4,7 @@ from pyformlang.regular_expression import Regex
 
 
 name_regularPhrase = r'[A-Za-z]+\s[A-Za-z]+'
-date_regularPhrase = r'\d{2}/\d{2}/\d{4}'
-direction_regularPhrase = r'\d+\s[A-Za-z]+\s[A-Za-z]+'
 phone_regularPhrase = r'\d{3}-\d{3}-\d{4}'
-email_regularPhrase = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
 identification_regularPhrase = r'[A-Z0-9]{8}'
 
 
