@@ -35,7 +35,10 @@ class GUI:
     def load_pdf(self):
         file_path = filedialog.askopenfilename(filetypes=[("PDF files", "*.pdf")])
         if file_path:
-            pass
+            with open(file_path, 'r') as file:
+                text = file.read()
+            self.text_box.delete('1.0', tk.END)
+            self.text_box.insert(tk.END, text)
 
     def save_pdf(self):
         pass
