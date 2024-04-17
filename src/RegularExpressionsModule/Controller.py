@@ -1,8 +1,11 @@
-from . import AutomataModule
+from . import AutomataModule, RegularExpression
+import re
 
 class Controller:
     def __init__(self):
-        pass
+        self.is_valid_name = ''
+        self.is_valid_phone = ''
+        self.is_valid_id = ''
 
     def _validate_nombre(self, input_string):
         dfa_nombre = AutomataModule.create_nombre_dfa()
@@ -18,16 +21,27 @@ class Controller:
 
     def validate_input(self, input_string):
         # Validar nombre
-        is_valid_name = self._validate_nombre(input_string)
+        maches_name = re.findall(RegularExpression.name_regularPhrase, input_string)
+        if maches_name:
+            for mach in maches_name:
+                print(mach)
+                self.is_valid_name = self._validate_nombre(mach)
+                print(self.is_valid_name)
 
         # Validar teléfono
-        is_valid_phone = self._validate_telefono(input_string)
+        maches_phone = re.findall(RegularExpression.phone_regularPhrase, input_string)
+        if maches_phone:
+            for mach in maches_phone:
+                is_valid_phone = self._validate_telefono(mach)
 
         # Validar identificación
-        is_valid_id = self._validate_identificacion(input_string)
+        maches_id = re.findall(RegularExpression.identification_name_regularPhrase, input_string)
+        if maches_id:
+            for mach in maches_id:
+                is_valid_id = self._validate_identificacion(input_string)
 
         return {
-            "is_valid_name": is_valid_name,
-            "is_valid_phone": is_valid_phone,
-            "is_valid_id": is_valid_id
+            "is_valid_name": self.is_valid_name,
+            "is_valid_phone": self.is_valid_phone,
+            "is_valid_id": self.is_valid_id
         }

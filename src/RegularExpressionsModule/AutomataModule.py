@@ -1,3 +1,5 @@
+from pyformlang.finite_automaton import DeterministicFiniteAutomaton
+
 def create_nombre_dfa():
     nombre_dfa = DeterministicFiniteAutomaton()
     nombre_dfa.add_start_state("q0")

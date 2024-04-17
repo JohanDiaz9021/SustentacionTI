@@ -1,6 +1,10 @@
 import tkinter as tk
 from tkinter import filedialog
 from PyPDF2 import PdfReader, PdfWriter
+import os
+import sys
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+import RegularExpressionsModule.Controller as con
 
 
 class GUI:
@@ -8,6 +12,7 @@ class GUI:
         self.window = window
         self.window.title("Visualizador y Guardado de PDF")
         self.window.geometry("800x600")
+        self.controller = con.Controller()
 
         self.title_label = tk.Label(self.window, text="Visualizador y Guardado de PDF", font=("Arial", 20))
         self.title_label.pack(pady=20)
@@ -37,7 +42,8 @@ class GUI:
                 self.text_box.insert(tk.END, f"Error al cargar el PDF: {e}")
 
     def save_pdf(self):
-        text_to_save = self.text_box.get("1.0", tk.END)
+        process = self.text_box.get("1.0", tk.END)
+        text_to_save = self.controller.validate_input(process)
         file_path = filedialog.asksaveasfilename(defaultextension=".pdf", filetypes=[("PDF files", "*.pdf")])
         if file_path:
             try:
