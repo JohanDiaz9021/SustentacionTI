@@ -25,20 +25,25 @@ class Controller:
         if maches_name:
             for mach in maches_name:
                 print(mach)
-                self.is_valid_name = self._validate_nombre(mach)
-                print(self.is_valid_name)
+                if self._validate_nombre(mach):
+                   self.is_valid_name = mach 
+                   break
 
         # Validar teléfono
         maches_phone = re.findall(RegularExpression.phone_regularPhrase, input_string)
         if maches_phone:
             for mach in maches_phone:
-                is_valid_phone = self._validate_telefono(mach)
+                if  self._validate_telefono(mach):
+                    self.is_valid_phone = mach
+                    break
 
         # Validar identificación
         maches_id = re.findall(RegularExpression.identification_name_regularPhrase, input_string)
         if maches_id:
             for mach in maches_id:
-                is_valid_id = self._validate_identificacion(input_string)
+                if self._validate_identificacion(input_string):
+                    self.is_valid_id = mach
+                    break
 
         return {
             "is_valid_name": self.is_valid_name,

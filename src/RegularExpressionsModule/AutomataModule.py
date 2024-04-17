@@ -4,7 +4,7 @@ def create_nombre_dfa():
     nombre_dfa = DeterministicFiniteAutomaton()
     nombre_dfa.add_start_state("q0")
     nombre_dfa.add_final_state("q1")
-    for letter in "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ":
+    for letter in "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ ":
         nombre_dfa.add_transition("q0", letter, "q1")
         nombre_dfa.add_transition("q1", letter, "q1")
     return nombre_dfa
