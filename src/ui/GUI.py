@@ -42,14 +42,15 @@ class GUI:
                 self.text_box.insert(tk.END, f"Error al cargar el PDF: {e}")
 
     def save_pdf(self):
-        process = self.text_box.get("1.0", tk.END)
-        text_to_save = self.controller.validate_input(process)
+        text_to_save = self.controller.validate_input(self.text_box.get("1.0", tk.END))
+        
         file_path = filedialog.asksaveasfilename(defaultextension=".pdf", filetypes=[("PDF files", "*.pdf")])
+
         if file_path:
             try:
                 pdf_writer = PdfWriter()
                 pdf_writer.add_blank_page()
-                pdf_writer.add_page(PdfReader(file_path).pages[0])
+                pdf_writer.add_page().merge_textboxes([text_to_save])
                 with open(file_path, "wb") as pdf_output_file:
                     pdf_writer.write(pdf_output_file)
             except Exception as e:

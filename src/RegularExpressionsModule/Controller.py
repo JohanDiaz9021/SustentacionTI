@@ -24,7 +24,6 @@ class Controller:
         maches_name = re.findall(RegularExpression.name_regularPhrase, input_string)
         if maches_name:
             for mach in maches_name:
-                print(mach)
                 if self._validate_nombre(mach):
                    self.is_valid_name = mach 
                    break
