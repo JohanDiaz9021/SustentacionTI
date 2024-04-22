@@ -1,6 +1,8 @@
 import tkinter as tk
 from tkinter import filedialog
-from PyPDF2 import PdfReader, PdfWriter
+from PyPDF2 import PdfReader
+from reportlab.lib.pagesizes import letter
+from reportlab.pdfgen import canvas
 import os
 import sys
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
@@ -42,20 +44,22 @@ class GUI:
                 self.text_box.insert(tk.END, f"Error al cargar el PDF: {e}")
 
     def save_pdf(self):
-        text_to_save = self.controller.validate_input(self.text_box.get("1.0", tk.END))
-        
+        text = self.text_box.get("1.0", tk.END)
+        text_to_save = self.controller.validate_input(text)
+    
         file_path = filedialog.asksaveasfilename(defaultextension=".pdf", filetypes=[("PDF files", "*.pdf")])
-
+    
         if file_path:
             try:
-                pdf_writer = PdfWriter()
-                pdf_writer.add_blank_page()
-                pdf_writer.add_page().merge_textboxes([text_to_save])
-                with open(file_path, "wb") as pdf_output_file:
-                    pdf_writer.write(pdf_output_file)
+                # Crear un lienzo para escribir el texto
+                c = canvas.Canvas(file_path, pagesize=letter)
+                c.drawString(72, 750, f"{text_to_save}")
+                c.save()
+                self.text_box.delete("1.0", tk.END)
             except Exception as e:
                 self.text_box.delete("1.0", tk.END)
                 self.text_box.insert(tk.END, f"Error al guardar como PDF: {e}")
+            
 
 
 def main():

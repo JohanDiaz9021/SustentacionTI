@@ -11,7 +11,7 @@ class automata_test(unittest.TestCase):
         self.assertIn("q1", nombre_dfa.states)
         self.assertEqual(nombre_dfa.start_state, "q0")
         self.assertIn("q1", nombre_dfa.final_states)
-        for letter in "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ":
+        for letter in "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ ":
             self.assertIn(("q0", letter, "q1"), nombre_dfa.transitions)
             self.assertIn(("q1", letter, "q1"), nombre_dfa.transitions)
 

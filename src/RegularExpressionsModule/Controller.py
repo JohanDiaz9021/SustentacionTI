@@ -38,14 +38,12 @@ class Controller:
 
         # Validar identificación
         maches_id = re.findall(RegularExpression.identification_name_regularPhrase, input_string)
+        print(maches_phone , maches_id)
         if maches_id:
             for mach in maches_id:
-                if self._validate_identificacion(input_string):
+                if self._validate_identificacion(mach):
                     self.is_valid_id = mach
                     break
 
-        return {
-            "is_valid_name": self.is_valid_name,
-            "is_valid_phone": self.is_valid_phone,
-            "is_valid_id": self.is_valid_id
-        }
+        return f"Nombre: {self.is_valid_name}, telefono: {self.is_valid_phone}, cédula: {self.is_valid_id}"
+        

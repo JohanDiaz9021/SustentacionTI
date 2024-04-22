@@ -12,9 +12,9 @@ def create_nombre_dfa():
 def create_telefono_dfa():
     telefono_dfa = DeterministicFiniteAutomaton()
     telefono_dfa.add_start_state("q0")
-    telefono_dfa.add_final_state("q9")
+    telefono_dfa.add_final_state("q10")
+    telefono_dfa.add_transition("q0", str(3), "q1")
     for i in range(10):  # Dígitos del 0 al 9
-        telefono_dfa.add_transition("q0", str(i), "q1")
         telefono_dfa.add_transition("q1", str(i), "q2")
         telefono_dfa.add_transition("q2", str(i), "q3")
         telefono_dfa.add_transition("q3", str(i), "q4")
@@ -22,7 +22,8 @@ def create_telefono_dfa():
         telefono_dfa.add_transition("q5", str(i), "q6")
         telefono_dfa.add_transition("q6", str(i), "q7")
         telefono_dfa.add_transition("q7", str(i), "q8")
-    telefono_dfa.add_transition("q8", "-", "q9")
+        telefono_dfa.add_transition("q8", str(i), "q9")
+        telefono_dfa.add_transition("q9", str(i), "q10")
     return telefono_dfa
 
 def create_identificacion_dfa():
